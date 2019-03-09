@@ -7,6 +7,7 @@ include ':samples:sdk-hellovr'
 include ':samples:sdk-video360'
 include ':samples:sdk-videoplayer'
 
+/*
 // NDK samples are disabled by default because they need the Android NDK to be
 // installed in addition to the SDK. To build them, first extract the NDK .so
 // files by running "./gradlew :extractNdk" which will create a libraries/jni
@@ -34,3 +35,5 @@ rootProject.children.clear()
 
 // Add the subdirectories as top-level modules.
 rootProject.children.addAll(moduleList)
+
+*/
