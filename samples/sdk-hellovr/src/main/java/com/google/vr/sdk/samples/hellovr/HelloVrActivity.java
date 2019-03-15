@@ -323,7 +323,7 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
     // Apply the eye transformation to the camera.
     Matrix.multiplyMM(view, 0, eye.getEyeView(), 0, camera, 0);
 
-    // Build the ModelView and ModelViewProjection matrices
+    // Build the ModelView and ModelViewProjection matrices. TEST
     // for calculating the position of the target object.
     float[] perspective = eye.getPerspective(Z_NEAR, Z_FAR);
 
