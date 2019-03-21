@@ -393,11 +393,11 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
     Matrix.setIdentityM(modelTarget, 0);
     Matrix.translateM(modelTarget, 0, targetPosition[0], targetPosition[1], targetPosition[2]);
     Matrix.multiplyMV(posVec, 0, rotationMatrix, 0, modelTarget, 12);
-
+    /*
     targetPosition[0] = posVec[0];
     targetPosition[1] = (float) Math.tan(pitchRadians) * targetDistance;
     targetPosition[2] = posVec[2];
-
+    */
     updateTargetPosition();
     curTargetObject = random.nextInt(TARGET_MESH_COUNT);
   }
