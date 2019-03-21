@@ -255,15 +255,15 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
       targetObjectNotSelectedTextures = new ArrayList<>();
       targetObjectSelectedTextures = new ArrayList<>();
       targetObjectMeshes.add(
-          new TexturedMesh(this, "Icosahedron.obj", objectPositionParam, objectUvParam));
+          new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
       targetObjectNotSelectedTextures.add(new Texture(this, "Icosahedron_Blue_BakedDiffuse.png"));
       targetObjectSelectedTextures.add(new Texture(this, "Icosahedron_Pink_BakedDiffuse.png"));
       targetObjectMeshes.add(
-          new TexturedMesh(this, "QuadSphere.obj", objectPositionParam, objectUvParam));
+          new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
       targetObjectNotSelectedTextures.add(new Texture(this, "QuadSphere_Blue_BakedDiffuse.png"));
       targetObjectSelectedTextures.add(new Texture(this, "QuadSphere_Pink_BakedDiffuse.png"));
       targetObjectMeshes.add(
-          new TexturedMesh(this, "TriSphere.obj", objectPositionParam, objectUvParam));
+          new TexturedMesh(this, "hyperbolic_paraboloid.obj", objectPositionParam, objectUvParam));
       targetObjectNotSelectedTextures.add(new Texture(this, "TriSphere_Blue_BakedDiffuse.png"));
       targetObjectSelectedTextures.add(new Texture(this, "TriSphere_Pink_BakedDiffuse.png"));
     } catch (IOException e) {
