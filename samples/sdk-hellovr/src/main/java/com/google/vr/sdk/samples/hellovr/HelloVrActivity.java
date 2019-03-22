@@ -254,22 +254,22 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
       targetObjectMeshes = new ArrayList<>();
       targetObjectNotSelectedTextures = new ArrayList<>();
       targetObjectSelectedTextures = new ArrayList<>();
-      targetObjectMeshes.add(
-          new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
-      targetObjectNotSelectedTextures.add(new Texture(this, "Icosahedron_Blue_BakedDiffuse.png"));
-      targetObjectSelectedTextures.add(new Texture(this, "Icosahedron_Pink_BakedDiffuse.png"));
-      targetObjectMeshes.add(
-          new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
-      targetObjectNotSelectedTextures.add(new Texture(this, "QuadSphere_Blue_BakedDiffuse.png"));
-      targetObjectSelectedTextures.add(new Texture(this, "QuadSphere_Pink_BakedDiffuse.png"));
-      targetObjectMeshes.add(
-          new TexturedMesh(this, "hyperbolic_paraboloid.obj", objectPositionParam, objectUvParam));
-      targetObjectNotSelectedTextures.add(new Texture(this, "TriSphere_Blue_BakedDiffuse.png"));
-      targetObjectSelectedTextures.add(new Texture(this, "TriSphere_Pink_BakedDiffuse.png"));
-    } catch (IOException e) {
-      Log.e(TAG, "Unable to initialize objects", e);
-    }
-    curTargetObject = random.nextInt(TARGET_MESH_COUNT);
+    targetObjectMeshes.add(
+            new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
+    targetObjectNotSelectedTextures.add(new Texture(this, "eplli.png"));
+    targetObjectSelectedTextures.add(new Texture(this, "eplli.png"));
+    targetObjectMeshes.add(
+            new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
+    targetObjectNotSelectedTextures.add(new Texture(this, "what.png"));
+    targetObjectSelectedTextures.add(new Texture(this, "what.png"));
+    targetObjectMeshes.add(
+            new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
+    targetObjectNotSelectedTextures.add(new Texture(this, "eplli.png"));
+    targetObjectSelectedTextures.add(new Texture(this, "eplli.png"));
+  } catch (IOException e) {
+    Log.e(TAG, "Unable to initialize objects", e);
+  }
+  curTargetObject = random.nextInt(TARGET_MESH_COUNT);
   }
 
   /** Updates the target object position. */
