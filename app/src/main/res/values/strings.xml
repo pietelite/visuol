@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HelloVR Java</string>
+    <string name="title_activity_visuol_launch">VisuolLaunch</string>
+    <string name="welcome">Welcome to the Visuol app!</string>
+    <string name="startVr">Start VR</string>
+    <string name="title_activity_app_information">AppInformation</string>
+    <string name="information_header">Visuol App Information</string>
+    <string name="return_to_home">Back</string>
+    <string name="app_information">
+        Project Team Members
+        Project Manager: Vishnu
+        Developer: Pieter
+        Developer: Jiaming
+    </string>
+</resources>
