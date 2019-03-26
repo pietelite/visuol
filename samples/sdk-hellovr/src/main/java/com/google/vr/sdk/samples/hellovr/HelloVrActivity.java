@@ -27,6 +27,8 @@ import com.google.vr.sdk.base.GvrActivity;
 import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
+import com.google.vr.sdk.controller.Controller;
+import com.google.vr.sdk.controller.ControllerManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -45,6 +47,8 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
   private static final String TAG = "HelloVrActivity";
 
   private static final int TARGET_MESH_COUNT = 3;
+
+  //private final Controller controller = ControllerManager.getController();
 
   private static final float Z_NEAR = 0.01f;
   private static final float Z_FAR = 10.0f;
@@ -148,6 +152,7 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
     modelTarget = new float[16];
     modelRoom = new float[16];
     headView = new float[16];
+    //controller = ControllerManager.getController();
 
     // Initialize 3D audio engine.
     gvrAudioEngine = new GvrAudioEngine(this, GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
@@ -254,18 +259,31 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
       targetObjectMeshes = new ArrayList<>();
       targetObjectNotSelectedTextures = new ArrayList<>();
       targetObjectSelectedTextures = new ArrayList<>();
+      //GET RID OF OBJECTS FROM ORIGINAL FILE
+        /*
       targetObjectMeshes.add(
           new TexturedMesh(this, "Icosahedron.obj", objectPositionParam, objectUvParam));
       targetObjectNotSelectedTextures.add(new Texture(this, "Icosahedron_Blue_BakedDiffuse.png"));
       targetObjectSelectedTextures.add(new Texture(this, "Icosahedron_Pink_BakedDiffuse.png"));
+      */
       targetObjectMeshes.add(
           new TexturedMesh(this, "QuadSphere.obj", objectPositionParam, objectUvParam));
       targetObjectNotSelectedTextures.add(new Texture(this, "QuadSphere_Blue_BakedDiffuse.png"));
       targetObjectSelectedTextures.add(new Texture(this, "QuadSphere_Pink_BakedDiffuse.png"));
+      /*
       targetObjectMeshes.add(
           new TexturedMesh(this, "TriSphere.obj", objectPositionParam, objectUvParam));
       targetObjectNotSelectedTextures.add(new Texture(this, "TriSphere_Blue_BakedDiffuse.png"));
       targetObjectSelectedTextures.add(new Texture(this, "TriSphere_Pink_BakedDiffuse.png"));
+      */
+      targetObjectMeshes.add(
+              new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
+      targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+      targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+      targetObjectMeshes.add(
+              new TexturedMesh(this, "hyperbolic_paraboloid.obj", objectPositionParam, objectUvParam));
+      targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+      targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
     } catch (IOException e) {
       Log.e(TAG, "Unable to initialize objects", e);
     }
@@ -372,11 +390,16 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
     if (isLookingAtTarget()) {
       successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
       gvrAudioEngine.playSound(successSourceId, false /* looping disabled */);
+      /* COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT
       hideTarget();
+      */
+      //INSTEAD, JUST ROTATE THROUGH OBJECTS
+      curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
     }
   }
 
   /** Find a new random position for the target object. */
+  /* COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT
   private void hideTarget() {
     float[] rotationMatrix = new float[16];
     float[] posVec = new float[4];
@@ -401,6 +424,7 @@ public class HelloVrActivity extends GvrActivity implements GvrView.StereoRender
     updateTargetPosition();
     curTargetObject = random.nextInt(TARGET_MESH_COUNT);
   }
+  */
 
   /**
    * Check if user is looking at the target object by calculating where the object is in eye-space.
