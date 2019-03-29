@@ -21,11 +21,13 @@ import javax.microedition.khronos.egl.EGLConfig;
 /**
  * Group Project by Pieter and Jiaming.
  *
- * User will be able to see three dimensional objects used in Calculus III class and switch them by clicking the panels.
+ * User will be able to see three dimensional objects used in Calculus III class and switch them by
+ * clicking the panels.
  */
 public class MainActivity extends GvrActivity implements GvrView.StereoRenderer {
     private static final String TAG = "HelloVrActivity";
 
+    /** The total number of objects in the app. */
     private static final int TARGET_MESH_COUNT = 3;
 
     //private final Controller controller = ControllerManager.getController();
@@ -37,7 +39,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private static final float[] POS_MATRIX_MULTIPLY_VEC = {0.0f, 0.0f, 0.0f, 1.0f};
     private static final float[] FORWARD_VEC = {0.0f, 0.0f, -1.0f, 1.f};
 
+    /** Minimum distance away from the user the object could be generated. Unused. */
     private static final float MIN_TARGET_DISTANCE = 3.0f;
+    /** Maximum distance away from the user the object could be generated. Unused. */
     private static final float MAX_TARGET_DISTANCE = 3.5f;
 
     private static final String OBJECT_SOUND_FILE = "audio/HelloVR_Loop.ogg";
@@ -87,9 +91,27 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
     private TexturedMesh room;
     private Texture roomTex;
+
+    /** The list which contains the textured mesh for each of the objects */
     private ArrayList<TexturedMesh> targetObjectMeshes;
+
+    /**
+     * The list which contains the texture (colors) for
+     * each of the objects when it is not selected.
+     */
     private ArrayList<Texture> targetObjectNotSelectedTextures;
+
+    /**
+     * The list which contains the texture (colors) for
+     * each of the objects when it is selected.
+     */
     private ArrayList<Texture> targetObjectSelectedTextures;
+
+    /**
+     * The int which refers to the index in each object-related list corresponding to the current
+     * object which has been chosen. This index will identify which texture and textured mesh to use
+     * in the each ArrayList.
+     */
     private int curTargetObject;
 
     private Random random;
@@ -135,7 +157,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         //controller = ControllerManager.getController();
 
         // Initialize 3D audio engine.
-        gvrAudioEngine = new GvrAudioEngine(this, GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
+        gvrAudioEngine = new GvrAudioEngine(this,
+                GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
 
         random = new Random();
     }
@@ -149,8 +172,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         gvrView.setRenderer(this);
         gvrView.setTransitionViewEnabled(true);
 
-        // Enable Cardboard-trigger feedback with Daydream headsets. This is a simple way of supporting
-        // Daydream controller input for basic interactions using the existing Cardboard trigger API.
+        // Enable Cardboard-trigger feedback with Daydream headsets. This is a simple way of
+        // supporting Daydream controller input for basic interactions using the existing Cardboard
+        // trigger API. We want to fix this so we can use more Daydream Controller functionality.
         gvrView.enableCardboardTriggerEmulation();
 
         if (gvrView.setAsyncReprojectionEnabled(true)) {
@@ -239,23 +263,10 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             targetObjectMeshes = new ArrayList<>();
             targetObjectNotSelectedTextures = new ArrayList<>();
             targetObjectSelectedTextures = new ArrayList<>();
-            //GET RID OF OBJECTS FROM ORIGINAL FILE
-        /*
-      targetObjectMeshes.add(
-          new TexturedMesh(this, "Icosahedron.obj", objectPositionParam, objectUvParam));
-      targetObjectNotSelectedTextures.add(new Texture(this, "Icosahedron_Blue_BakedDiffuse.png"));
-      targetObjectSelectedTextures.add(new Texture(this, "Icosahedron_Pink_BakedDiffuse.png"));
-      */
             targetObjectMeshes.add(
                     new TexturedMesh(this, "QuadSphere.obj", objectPositionParam, objectUvParam));
             targetObjectNotSelectedTextures.add(new Texture(this, "QuadSphere_Blue_BakedDiffuse.png"));
             targetObjectSelectedTextures.add(new Texture(this, "QuadSphere_Pink_BakedDiffuse.png"));
-      /*
-      targetObjectMeshes.add(
-          new TexturedMesh(this, "TriSphere.obj", objectPositionParam, objectUvParam));
-      targetObjectNotSelectedTextures.add(new Texture(this, "TriSphere_Blue_BakedDiffuse.png"));
-      targetObjectSelectedTextures.add(new Texture(this, "TriSphere_Pink_BakedDiffuse.png"));
-      */
             targetObjectMeshes.add(
                     new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
             targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
@@ -377,9 +388,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
         }
     }
-
-    /** Find a new random position for the target object. */
-  /* COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT
+    // COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT. This put the object in a new location.
+    // We could try to use this to make the rotation.
+  /*
   private void hideTarget() {
     float[] rotationMatrix = new float[16];
     float[] posVec = new float[4];

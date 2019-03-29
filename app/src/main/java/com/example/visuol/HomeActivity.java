@@ -13,16 +13,23 @@ import android.widget.Button;
  * by pushing the appropriate buttons.
  */
 public class HomeActivity extends Activity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visuol_launch);
+        toLaunch();
+    }
+
+    /** Opens the main launcher layout */
+    void toLaunch() {
+        setContentView(R.layout.visuol_launch);
         Button startVr = findViewById(R.id.startVr);
         Button toInformation = findViewById(R.id.toInformation);
+
+        //Set the actions to occur when clicking the buttons
         startVr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Start VR
                 Intent newIntent = new Intent(HomeActivity.this, MainActivity.class);
                 HomeActivity.this.startActivity(newIntent);
             }
@@ -30,9 +37,19 @@ public class HomeActivity extends Activity {
         toInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newIntent = new Intent(
-                        HomeActivity.this, AppInformationActivity.class);
-                HomeActivity.this.startActivity(newIntent);
+                toInformation();
+            }
+        });
+    }
+
+    /** Opens the app information layout */
+    void toInformation() {
+        setContentView(R.layout.app_information);
+        Button toLaunch = findViewById(R.id.toLaunch);
+        toLaunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toLaunch();
             }
         });
     }

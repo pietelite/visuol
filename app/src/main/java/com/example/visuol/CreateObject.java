@@ -1,22 +1,24 @@
 package com.example.visuol;
 
+/* Commented because import library not recognized
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+*/
 import java.util.*;
 
 public class CreateObject {
-    /* The maximum of x coordinates.*/
+    /** The maximum of x coordinates.*/
     private double xMax = 0.8;
-    /* The minimum of x coordinates.*/
+    /** The minimum of x coordinates.*/
     private double xMin = -0.8;
-    /* The maximum of y coordinates.*/
+    /** The maximum of y coordinates.*/
     private double yMax = 0.8;
-    /* The minimum of y coordinates.*/
+    /** The minimum of y coordinates.*/
     private double yMin = -0.8;
-    /* The points being taken.*/
+    /** The points being taken.*/
     private long resolution = 100;
 
-    /*a*(x-xo)**xP + b*(y-yo)**yP + c*(z-zo)^zP = d*/
+    /** Equation: a*(x-xo)**xP + b*(y-yo)**yP + c*(z-zo)^zP = d */
     private int a;
     private int x0;
     private int xp;
@@ -32,12 +34,14 @@ public class CreateObject {
 
     private String objectName;
 
+    /* Commented because program was not running
     private INDArray calXCor() {
         return Nd4j.linspace(xMin,xMax,resolution);
     }
     private INDArray calYCor() {
         return Nd4j.linspace(yMin,yMax,resolution);
     }
+    */
     public void setXTermPositive(boolean pos) {
        xTermPositive = pos;
     }
@@ -69,6 +73,7 @@ public class CreateObject {
         return Math.pow(third, 1/zp) + z0;
     }
     private void generateVectors() {
+        /* Commented because program was not running
         double[] xCors = calXCor().toDoubleVector();
         double[] yCors = calYCor().toDoubleVector();
         Vertex[][] vertexMatrix = new Vertex[xCors.length][yCors.length];
@@ -111,5 +116,6 @@ public class CreateObject {
                 faces.add(face);
             }
         }
+        */
     }
 }
