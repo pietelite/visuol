@@ -29,11 +29,11 @@
         android:supportsRtl="true"
         android:theme="@style/VrActivityTheme">
         <activity
-            android:name=".AppInformation"
+            android:name=".AppInformationActivity"
             android:label="@string/title_activity_app_information"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".VisuolLaunch"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_visuol_launch"
             android:resizeableActivity="true"
             android:screenOrientation="portrait">

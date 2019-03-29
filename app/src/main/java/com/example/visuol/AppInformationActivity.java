@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AppInformation extends Activity {
+/**
+ * This activity has the sole purpose of showing the user the information about the development
+ * of the app.
+ */
+public class AppInformationActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,8 +20,8 @@ public class AppInformation extends Activity {
         toLaunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newIntent = new Intent(AppInformation.this, VisuolLaunch.class);
-                AppInformation.this.startActivity(newIntent);
+                Intent newIntent = new Intent(AppInformationActivity.this, HomeActivity.class);
+                AppInformationActivity.this.startActivity(newIntent);
             }
         });
     }
