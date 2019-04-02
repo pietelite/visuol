@@ -7,7 +7,7 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-*.gitDS_Store
+*.DS_Store
 /build
 /captures
 .externalNativeBuild

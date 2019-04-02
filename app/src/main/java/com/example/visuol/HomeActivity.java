@@ -54,4 +54,14 @@ public class HomeActivity extends Activity {
         });
     }
 
+    void create() {
+        Button createOb = findViewById(R.id.createObject);
+        createOb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateObject a = new CreateObject();
+                a.writeObject();
+            }
+        });
+    }
 }
