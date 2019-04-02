@@ -7,6 +7,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -147,15 +149,19 @@ public class CreateObject {
     private int countPos = 0;
     private int countTexture = 0;
     private int countNormal = 0;
+    private static final String filename = "src/newObject.txt";
+    public URL getPackageLocation() {
+        return getClass().getResource(".");
+    }
     public void writeObject() {
         try {
             generateVectors();
             DecimalFormat df = new DecimalFormat("%.8f");
-            File file = new File("src/newObject.txt");
+            File file = new File(filename);
             if (!file.exists()) {
                 file.createNewFile();
             }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file,true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write("g defalut\n");
             writer.write("#Vertices:\n");
             int posLineCount = 0;

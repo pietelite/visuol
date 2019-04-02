@@ -44,8 +44,6 @@ public class HomeActivity extends Activity {
 
     /** Opens the app information layout */
     void toInformation() {
-        CreateObject a = new CreateObject();
-        a.writeObject();
         setContentView(R.layout.app_information);
         Button toLaunch = findViewById(R.id.toLaunch);
         toLaunch.setOnClickListener(new View.OnClickListener() {
@@ -56,4 +54,14 @@ public class HomeActivity extends Activity {
         });
     }
 
+    void create() {
+        Button createOb = findViewById(R.id.createObject);
+        createOb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateObject a = new CreateObject();
+                a.writeObject();
+            }
+        });
+    }
 }
