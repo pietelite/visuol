@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HelloVR Java</string>
+    <string name="app_name">Visuol</string>
+    <string name="vr_activity_name">VR Java</string>
     <string name="title_activity_visuol_launch">VisuolLaunch</string>
     <string name="welcome">Welcome to the Visuol app!</string>
     <string name="startVr">Start VR</string>

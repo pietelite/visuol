@@ -3,6 +3,7 @@ package com.example.visuol;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import com.google.vr.sdk.audio.GvrAudioEngine;
 import com.google.vr.sdk.base.AndroidCompat;
@@ -30,6 +31,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     /** The total number of objects in the app. */
     private static final int TARGET_MESH_COUNT = 3;
 
+    private int rotationInterval = 50; // 5 seconds by default, can be changed later
+    private Handler handler;
+    private boolean targetPositionUpdated = false;
     //private final Controller controller = ControllerManager.getController();
 
     private static final float Z_NEAR = 0.01f;
@@ -155,7 +159,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         modelRoom = new float[16];
         headView = new float[16];
         //controller = ControllerManager.getController();
-
+        handler = new Handler();
+        startRotation();
         // Initialize 3D audio engine.
         gvrAudioEngine = new GvrAudioEngine(this,
                 GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
@@ -183,7 +188,6 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             // sustained performance mode.
             AndroidCompat.setSustainedPerformanceMode(this, true);
         }
-
         setGvrView(gvrView);
     }
 
@@ -285,7 +289,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private void updateTargetPosition() {
         Matrix.setIdentityM(modelTarget, 0);
         Matrix.translateM(modelTarget, 0, targetPosition[0], targetPosition[1], targetPosition[2]);
+        Matrix.rotateM(modelTarget, 0, yawDegreeCount, 0, 1, 0);
 
+        targetPositionUpdated = true;
         // Update the sound location to match it with the new target position.
         if (sourceId != GvrAudioEngine.INVALID_ID) {
             gvrAudioEngine.setSoundObjectPosition(
@@ -381,11 +387,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         if (isLookingAtTarget()) {
             successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
             gvrAudioEngine.playSound(successSourceId, false /* looping disabled */);
-      /* COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT
-      hideTarget();
-      */
-            //INSTEAD, JUST ROTATE THROUGH OBJECTS
             curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
+            yawDegreeCount = 0;
         }
     }
     // COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT. This put the object in a new location.
@@ -429,5 +432,35 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
         float angle = Util.angleBetweenVectors(tempPosition, FORWARD_VEC);
         return angle < ANGLE_LIMIT;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRotation();
+    }
+    private float yawDegreeCount = 0;
+    Runnable rotationStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (targetPositionUpdated) {
+                    yawDegreeCount += 0.4;
+                    updateTargetPosition();
+                }
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                handler.postDelayed(rotationStatusChecker, rotationInterval);
+            }
+        }
+    };
+
+    void startRotation() {
+        rotationStatusChecker.run();
+    }
+
+    void stopRotation() {
+        handler.removeCallbacks(rotationStatusChecker);
     }
 }
