@@ -30,12 +30,19 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private static final String TAG = "HelloVrActivity";
 
     /** The total number of objects in the app. */
-    private static final int TARGET_MESH_COUNT = 3;
+    private static final int TARGET_MESH_COUNT = 6;
 
-    private int rotationInterval = 50; // 5 seconds by default, can be changed later
+    private int rotationInterval = 50;
     private Handler handler;
     private boolean targetPositionUpdated = false;
-    //private final Controller controller = ControllerManager.getController();
+
+    /**
+     * Establish the new ControllerManager which will contain information about the specific
+     * controller we use throughout the app.
+     */
+    private ControllerManager controllerManager;
+    /** Our controller */
+    private Controller controller;
 
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 10.0f;
@@ -162,7 +169,25 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         modelTarget = new float[16];
         modelRoom = new float[16];
         headView = new float[16];
-        //controller = ControllerManager.getController();
+        controllerManager = new ControllerManager(this, new ControllerManager.EventListener() {
+            @Override
+            public void onApiStatusChanged(int i) {
+                return;
+            }
+
+            @Override
+            public void onRecentered() {
+                return;
+            }
+        });
+        controller = controllerManager.getController();
+        controllerManager.start();
+        controller.setEventListener(new Controller.EventListener() {
+            @Override
+            public void onUpdate() {
+                onControllerUpdate();
+            }
+        });
         handler = new Handler();
 
         // Define ceiling location
@@ -190,7 +215,10 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         // Enable Cardboard-trigger feedback with Daydream headsets. This is a simple way of
         // supporting Daydream controller input for basic interactions using the existing Cardboard
         // trigger API. We want to fix this so we can use more Daydream Controller functionality.
+
+        /*
         gvrView.enableCardboardTriggerEmulation();
+        */
 
         if (gvrView.setAsyncReprojectionEnabled(true)) {
             // Async reprojection decouples the app framerate from the display framerate,
@@ -204,6 +232,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     @Override
     public void onPause() {
         gvrAudioEngine.pause();
+        controllerManager.stop();
         super.onPause();
     }
 
@@ -211,6 +240,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     public void onResume() {
         super.onResume();
         gvrAudioEngine.resume();
+        controllerManager.start();
     }
 
     @Override
@@ -399,16 +429,14 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         Util.checkGlError("drawRoom");
     }
 
-    /**
-     * Called when the Cardboard trigger is pulled.
-     */
+    /*
     @Override
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
         if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
             successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
-            gvrAudioEngine.playSound(successSourceId, false /* looping disabled */);
+            gvrAudioEngine.playSound(successSourceId, false );
             curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
             yawDegreeCount = 0;
         }
@@ -419,6 +447,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             MainActivity.this.startActivity(newIntent);
         }
     }
+    */
+
     // COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT. This put the object in a new location.
     // We could try to use this to make the rotation.
   /*
@@ -461,10 +491,55 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         return angle < angleLimit;
     }
 
+    public void onControllerUpdate() {
+        //TODO figure out why the states of the controller are not changing
+        boolean clickButtonClicked = false;
+        if (controller.clickButtonState) {
+            if (!clickButtonClicked) {
+                onControllerClickButton();
+                clickButtonClicked = true;
+            }
+        } else {
+            clickButtonClicked = false;
+        }
+        System.out.println(controller.triggerButtonState);
+
+        boolean triggerButtonClicked = false;
+        if (controller.triggerButtonState) {
+            if (!triggerButtonClicked) {
+                onControllerTriggerButton();
+                triggerButtonClicked = true;
+            } else {
+                triggerButtonClicked = false;
+            }
+        }
+    }
+
+    public void onControllerClickButton() {
+        Log.i(TAG, "onControllerClickButton");
+        if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
+            successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
+            gvrAudioEngine.playSound(successSourceId, false );
+            curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
+            yawDegreeCount = 0;
+        }
+
+        if (isLookingAt(ceilingTarget, ANGLE_LIMIT_CEILING)) {
+            //For now just do the same thing as if you were looking at the object
+            Intent newIntent = new Intent(MainActivity.this, HomeActivity.class);
+            MainActivity.this.startActivity(newIntent);
+        }
+    }
+
+    public void onControllerTriggerButton() {
+        Log.i(TAG, "onControllerClickButton");
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         stopRotation();
+        controllerManager.stop();
     }
     private float yawDegreeCount = 0;
     Runnable rotationStatusChecker = new Runnable() {
