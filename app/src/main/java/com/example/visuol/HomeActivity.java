@@ -55,12 +55,13 @@ public class HomeActivity extends Activity {
     }
 
     void create() {
-        Button createOb = findViewById(R.id.createObject);
+        Button createOb = findViewById(R.id.createObj);
         createOb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CreateObject a = new CreateObject();
                 a.writeObject();
+                System.out.println("success");
             }
         });
     }

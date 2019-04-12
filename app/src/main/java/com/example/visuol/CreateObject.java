@@ -149,7 +149,7 @@ public class CreateObject {
     private int countPos = 0;
     private int countTexture = 0;
     private int countNormal = 0;
-    private static final String filename = "src/newObject.txt";
+    private static final String filename = "/Users/jiamingzeng/Desktop/newObject.txt";
     public URL getPackageLocation() {
         return getClass().getResource(".");
     }
