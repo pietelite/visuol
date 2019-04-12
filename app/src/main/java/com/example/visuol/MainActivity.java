@@ -1,8 +1,10 @@
 package com.example.visuol;
 
+import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import com.google.vr.sdk.audio.GvrAudioEngine;
 import com.google.vr.sdk.base.AndroidCompat;
@@ -30,6 +32,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     /** The total number of objects in the app. */
     private static final int TARGET_MESH_COUNT = 3;
 
+    private int rotationInterval = 50; // 5 seconds by default, can be changed later
+    private Handler handler;
+    private boolean targetPositionUpdated = false;
     //private final Controller controller = ControllerManager.getController();
 
     private static final float Z_NEAR = 0.01f;
@@ -49,7 +54,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
     private static final float FLOOR_HEIGHT = -2.0f;
 
-    private static final float ANGLE_LIMIT = 0.2f;
+    private static final float ANGLE_LIMIT_OBJECT = 0.4f;
+    private static final float ANGLE_LIMIT_CEILING = 0.5f;
 
     // The maximum yaw and pitch of the target object, in degrees. After hiding the target, its
     // yaw will be within [-MAX_YAW, MAX_YAW] and pitch will be within [-MAX_PITCH, MAX_PITCH].
@@ -126,6 +132,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private float[] modelTarget;
     private float[] modelRoom;
 
+    private float[] ceilingTarget;
+
     private float[] tempPosition;
     private float[] headRotation;
 
@@ -155,7 +163,14 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         modelRoom = new float[16];
         headView = new float[16];
         //controller = ControllerManager.getController();
+        handler = new Handler();
 
+        // Define ceiling location
+        ceilingTarget = new float[16];
+        Matrix.setIdentityM(ceilingTarget, 0);
+        Matrix.translateM(ceilingTarget, 0, 0, 5, 0);
+
+        startRotation();
         // Initialize 3D audio engine.
         gvrAudioEngine = new GvrAudioEngine(this,
                 GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
@@ -183,7 +198,6 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             // sustained performance mode.
             AndroidCompat.setSustainedPerformanceMode(this, true);
         }
-
         setGvrView(gvrView);
     }
 
@@ -266,13 +280,26 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             targetObjectMeshes.add(
                     new TexturedMesh(this, "QuadSphere.obj", objectPositionParam, objectUvParam));
             targetObjectNotSelectedTextures.add(new Texture(this, "QuadSphere_Blue_BakedDiffuse.png"));
-            targetObjectSelectedTextures.add(new Texture(this, "QuadSphere_Pink_BakedDiffuse.png"));
+            //The textures are the same for the QuadSphere because we want consistency with other objects for now
+            targetObjectSelectedTextures.add(new Texture(this, "QuadSphere_Blue_BakedDiffuse.png"));
             targetObjectMeshes.add(
                     new TexturedMesh(this, "elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
             targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
             targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
             targetObjectMeshes.add(
                     new TexturedMesh(this, "hyperbolic_paraboloid.obj", objectPositionParam, objectUvParam));
+            targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+            targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+            targetObjectMeshes.add(
+                    new TexturedMesh(this, "inverse_elliptic_paraboloid.obj", objectPositionParam, objectUvParam));
+            targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+            targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+            targetObjectMeshes.add(
+                    new TexturedMesh(this, "sinusoidal_sheet.obj", objectPositionParam, objectUvParam));
+            targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+            targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
+            targetObjectMeshes.add(
+                    new TexturedMesh(this, "trig_exp.obj", objectPositionParam, objectUvParam));
             targetObjectNotSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
             targetObjectSelectedTextures.add(new Texture(this, "colorfulGradient.jpg"));
         } catch (IOException e) {
@@ -285,7 +312,9 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private void updateTargetPosition() {
         Matrix.setIdentityM(modelTarget, 0);
         Matrix.translateM(modelTarget, 0, targetPosition[0], targetPosition[1], targetPosition[2]);
+        Matrix.rotateM(modelTarget, 0, yawDegreeCount, 0, 1, 0);
 
+        targetPositionUpdated = true;
         // Update the sound location to match it with the new target position.
         if (sourceId != GvrAudioEngine.INVALID_ID) {
             gvrAudioEngine.setSoundObjectPosition(
@@ -331,7 +360,6 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
         // Apply the eye transformation to the camera.
         Matrix.multiplyMM(view, 0, eye.getEyeView(), 0, camera, 0);
-
         // Build the ModelView and ModelViewProjection matrices. TEST
         // for calculating the position of the target object.
         float[] perspective = eye.getPerspective(Z_NEAR, Z_FAR);
@@ -353,7 +381,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     public void drawTarget() {
         GLES20.glUseProgram(objectProgram);
         GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
-        if (isLookingAtTarget()) {
+        if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
             targetObjectSelectedTextures.get(curTargetObject).bind();
         } else {
             targetObjectNotSelectedTextures.get(curTargetObject).bind();
@@ -378,14 +406,17 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
-        if (isLookingAtTarget()) {
+        if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
             successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
             gvrAudioEngine.playSound(successSourceId, false /* looping disabled */);
-      /* COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT
-      hideTarget();
-      */
-            //INSTEAD, JUST ROTATE THROUGH OBJECTS
             curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
+            yawDegreeCount = 0;
+        }
+
+        if (isLookingAt(ceilingTarget, ANGLE_LIMIT_CEILING)) {
+            //For now just do the same thing as if you were looking at the object
+            Intent newIntent = new Intent(MainActivity.this, HomeActivity.class);
+            MainActivity.this.startActivity(newIntent);
         }
     }
     // COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT. This put the object in a new location.
@@ -418,16 +449,45 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
   */
 
     /**
-     * Check if user is looking at the target object by calculating where the object is in eye-space.
+     * Check if user is looking at the target by comparing and multiplying vectors
      *
-     * @return true if the user is looking at the target object.
+     * @return true if the user is looking at the target.
      */
-    private boolean isLookingAtTarget() {
+    private boolean isLookingAt(float[] target, float angleLimit) {
         // Convert object space to camera space. Use the headView from onNewFrame.
-        Matrix.multiplyMM(modelView, 0, headView, 0, modelTarget, 0);
+        Matrix.multiplyMM(modelView, 0, headView, 0, target, 0);
         Matrix.multiplyMV(tempPosition, 0, modelView, 0, POS_MATRIX_MULTIPLY_VEC, 0);
-
         float angle = Util.angleBetweenVectors(tempPosition, FORWARD_VEC);
-        return angle < ANGLE_LIMIT;
+        return angle < angleLimit;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRotation();
+    }
+    private float yawDegreeCount = 0;
+    Runnable rotationStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (targetPositionUpdated) {
+                    yawDegreeCount += 0.4;
+                    updateTargetPosition();
+                }
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                handler.postDelayed(rotationStatusChecker, rotationInterval);
+            }
+        }
+    };
+
+    void startRotation() {
+        rotationStatusChecker.run();
+    }
+
+    void stopRotation() {
+        handler.removeCallbacks(rotationStatusChecker);
     }
 }
