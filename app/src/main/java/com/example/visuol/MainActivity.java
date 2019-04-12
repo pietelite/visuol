@@ -493,6 +493,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
     public void onControllerUpdate() {
         //TODO figure out why the states of the controller are not changing
+        controller.update();
         boolean clickButtonClicked = false;
         if (controller.clickButtonState) {
             if (!clickButtonClicked) {

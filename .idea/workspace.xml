@@ -7,16 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="551c43ba-d297-4062-a4eb-7d003ec27853" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -137,9 +128,10 @@
           <entry key="project.closed" value="4" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
     </session>
@@ -149,26 +141,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="499" column="42" lean-forward="true" selection-start-line="499" selection-start-column="42" selection-end-line="499" selection-end-column="42" />
+            <state relative-caret-position="485">
+              <caret line="517" column="43" lean-forward="true" selection-start-line="517" selection-start-column="43" selection-end-line="517" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6402#6403#0" expanded="true" />
-                <element signature="e#6432#6433#0" expanded="true" />
-                <element signature="e#6488#6489#0" expanded="true" />
-                <element signature="e#6518#6519#0" expanded="true" />
-                <element signature="e#6664#6817#0" expanded="true" />
-                <element signature="e#6816#6817#0" expanded="true" />
-                <element signature="e#8478#8479#0" expanded="true" />
-                <element signature="e#8526#8527#0" expanded="true" />
-                <element signature="e#8599#8600#0" expanded="true" />
-                <element signature="e#8645#8646#0" expanded="true" />
-                <element signature="e#21342#21343#0" expanded="true" />
-                <element signature="e#21395#21396#0" expanded="true" />
-                <element signature="e#21120#21121#0" expanded="true" />
-                <element signature="e#21163#21164#0" expanded="true" />
-                <element signature="e#21190#21191#0" expanded="true" />
-                <element signature="e#21252#21253#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -185,12 +161,12 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/visuol_launch.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor">
             <state relative-caret-position="578">
               <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -334,40 +310,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
-            <path>
-              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="visuol" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="assets" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -418,6 +362,38 @@
             <path>
               <item name="visuol" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
+            </path>
+            <path>
+              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="visuol" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="visuol" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="assets" type="edd41e36:AndroidSourceTypeNode" />
             </path>
           </expand>
           <select />
@@ -545,14 +521,14 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="CheckStyle" order="0" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.4989339" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.4989339" weight="0.329718" />
       <window_info anchor="bottom" id="TODO" order="2" />
-      <window_info anchor="bottom" id="Android Profiler" order="3" weight="0.329718" />
+      <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" weight="0.329718" />
       <window_info anchor="bottom" id="Debug" order="4" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49573562" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5010661" side_tool="true" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.4946695" weight="0.329718" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.50479746" side_tool="true" visible="true" weight="0.3286334" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="8" sideWeight="0.49573562" weight="0.3286334" />
+      <window_info anchor="bottom" id="Build" order="8" sideWeight="0.49520257" visible="true" weight="0.3286334" />
       <window_info anchor="bottom" id="Logcat" order="9" />
       <window_info anchor="bottom" id="Find" order="10" weight="0.329718" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -569,8 +545,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/res/layout/common_ui.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/common_ui.xml">
-      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/Texture.java">
@@ -645,35 +621,19 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_information.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="42" column="44" selection-start-line="42" selection-start-column="44" selection-end-line="42" selection-end-column="44" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="499" column="42" lean-forward="true" selection-start-line="499" selection-start-column="42" selection-end-line="499" selection-end-column="42" />
+        <state relative-caret-position="485">
+          <caret line="517" column="43" lean-forward="true" selection-start-line="517" selection-start-column="43" selection-end-line="517" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6402#6403#0" expanded="true" />
-            <element signature="e#6432#6433#0" expanded="true" />
-            <element signature="e#6488#6489#0" expanded="true" />
-            <element signature="e#6518#6519#0" expanded="true" />
-            <element signature="e#6664#6817#0" expanded="true" />
-            <element signature="e#6816#6817#0" expanded="true" />
-            <element signature="e#8478#8479#0" expanded="true" />
-            <element signature="e#8526#8527#0" expanded="true" />
-            <element signature="e#8599#8600#0" expanded="true" />
-            <element signature="e#8645#8646#0" expanded="true" />
-            <element signature="e#21342#21343#0" expanded="true" />
-            <element signature="e#21395#21396#0" expanded="true" />
-            <element signature="e#21120#21121#0" expanded="true" />
-            <element signature="e#21163#21164#0" expanded="true" />
-            <element signature="e#21190#21191#0" expanded="true" />
-            <element signature="e#21252#21253#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -686,12 +646,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/visuol_launch.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/CreateObject.java">
       <provider selected="true" editor-type-id="text-editor">
