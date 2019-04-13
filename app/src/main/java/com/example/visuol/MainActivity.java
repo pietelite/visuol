@@ -499,6 +499,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         return angle < angleLimit;
     }
 
+    //TODO move all controller things to a new static ControllerManager class
     boolean controllerClickButtonClicked = false;
     public void onControllerUpdate() {
         controller.update();
