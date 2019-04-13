@@ -1,6 +1,7 @@
 package com.example.visuol;
 
 import android.content.Intent;
+import android.graphics.PointF;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private static final int TARGET_MESH_COUNT = 6;
 
     private int rotationInterval = 50;
-    private Handler handler;
+    private Handler rotationHandler;
     private boolean targetPositionUpdated = false;
 
     /**
@@ -43,6 +44,13 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private ControllerManager controllerManager;
     /** Our controller */
     private Controller controller;
+
+    /**
+     * The location of the user's last touch on the controller touchpad, from 0 to 1 in both
+     * x and y directions. Valid region is a circle centered around [0.5, 0.5] with a radius
+     * of 0.5.
+     */
+    private PointF controllerTouch = new PointF(0.5f, 0.5f);
 
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 10.0f;
@@ -188,7 +196,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
                 onControllerUpdate();
             }
         });
-        handler = new Handler();
+        rotationHandler = new Handler();
 
         // Define ceiling location
         ceilingTarget = new float[16];
@@ -491,28 +499,16 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         return angle < angleLimit;
     }
 
+    boolean controllerClickButtonClicked = false;
     public void onControllerUpdate() {
-        //TODO figure out why the states of the controller are not changing
         controller.update();
-        boolean clickButtonClicked = false;
         if (controller.clickButtonState) {
-            if (!clickButtonClicked) {
+            if (!controllerClickButtonClicked) {
                 onControllerClickButton();
-                clickButtonClicked = true;
+                controllerClickButtonClicked = true;
             }
         } else {
-            clickButtonClicked = false;
-        }
-        System.out.println(controller.triggerButtonState);
-
-        boolean triggerButtonClicked = false;
-        if (controller.triggerButtonState) {
-            if (!triggerButtonClicked) {
-                onControllerTriggerButton();
-                triggerButtonClicked = true;
-            } else {
-                triggerButtonClicked = false;
-            }
+            controllerClickButtonClicked = false;
         }
     }
 
@@ -532,16 +528,14 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         }
     }
 
-    public void onControllerTriggerButton() {
-        Log.i(TAG, "onControllerClickButton");
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         stopRotation();
         controllerManager.stop();
     }
+
+    /** How much the object is rotated by about the vertical axis. */
     private float yawDegreeCount = 0;
     Runnable rotationStatusChecker = new Runnable() {
         @Override
@@ -554,7 +548,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
-                handler.postDelayed(rotationStatusChecker, rotationInterval);
+                rotationHandler.postDelayed(rotationStatusChecker, rotationInterval);
             }
         }
     };
@@ -564,6 +558,6 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     }
 
     void stopRotation() {
-        handler.removeCallbacks(rotationStatusChecker);
+        rotationHandler.removeCallbacks(rotationStatusChecker);
     }
 }
