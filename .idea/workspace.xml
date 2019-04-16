@@ -7,8 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="551c43ba-d297-4062-a4eb-7d003ec27853" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -109,7 +109,7 @@
           <entry key="colors" value="48" />
           <entry key="gitignore" value="27" />
           <entry key="gradle" value="54" />
-          <entry key="java" value="10104" />
+          <entry key="java" value="10377" />
           <entry key="properties" value="46" />
           <entry key="txt" value="181" />
           <entry key="xml" value="910" />
@@ -118,7 +118,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="54" />
-          <entry key="JAVA" value="10104" />
+          <entry key="JAVA" value="10377" />
           <entry key="PLAIN_TEXT" value="348" />
           <entry key="Properties" value="46" />
           <entry key="XML" value="958" />
@@ -139,11 +139,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="507" column="43" selection-start-line="507" selection-start-column="43" selection-end-line="507" selection-end-column="43" />
+            <state relative-caret-position="114">
+              <caret line="504" column="79" selection-start-line="504" selection-start-column="79" selection-end-line="504" selection-end-column="79" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#20517#20518#0" expanded="true" />
@@ -153,11 +153,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="99" column="54" selection-start-line="99" selection-start-column="54" selection-end-line="99" selection-end-column="54" />
+            <state relative-caret-position="323">
+              <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1030#1031#0" expanded="true" />
@@ -279,6 +279,7 @@
       <find>matrix</find>
       <find>rotationInt</find>
       <find>rotationhandler</find>
+      <find>controller.touch</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\piete\Projects\visuol</dir>
@@ -325,8 +326,8 @@
         <option value="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/example/visuol/BuildConfig.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" />
       </list>
     </option>
   </component>
@@ -723,10 +724,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="504" column="79" selection-start-line="504" selection-start-column="79" selection-end-line="504" selection-end-column="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#20517#20518#0" expanded="true" />
+            <element signature="e#20567#20568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="99" column="54" selection-start-line="99" selection-start-column="54" selection-end-line="99" selection-end-column="54" />
+        <state relative-caret-position="323">
+          <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1030#1031#0" expanded="true" />
@@ -741,18 +754,6 @@
             <element signature="e#1920#1921#0" expanded="true" />
             <element signature="e#2883#3278#0" expanded="true" />
             <element signature="e#3277#3278#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="507" column="43" selection-start-line="507" selection-start-column="43" selection-end-line="507" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#20517#20518#0" expanded="true" />
-            <element signature="e#20567#20568#0" expanded="true" />
           </folding>
         </state>
       </provider>

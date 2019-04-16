@@ -19,7 +19,7 @@ import java.util.List;
 public class ControllerHandler {
     private static final String TAG = "ControllerHandler";
 
-    private static final float MINIMUM_SWIPE_SPEED = 1.0f;
+    private static final float MINIMUM_SWIPE_SPEED = 0.0001f;
     private PointF touchPosPrevious = new PointF(0.5f, 0.5f);
     private PointF touchPos = new PointF(0.5f, 0.5f);
     private PointF touchVector = new PointF(0.0f, 0.0f);
@@ -97,12 +97,14 @@ public class ControllerHandler {
         @Override
         public void run() {
             try {
+                touchPos = controller.touch;
                 touchVector.x = (touchPos.x - touchPosPrevious.x) / UPDATE_TOUCH_VECTOR_INTERVAL;
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
                 updateTouchVectorHandler.postDelayed(
                         updateTouchVector, UPDATE_TOUCH_VECTOR_INTERVAL);
+                touchPosPrevious = touchPos;
             }
         }
     };
