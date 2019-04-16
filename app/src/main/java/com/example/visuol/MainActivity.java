@@ -38,19 +38,15 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private boolean targetPositionUpdated = false;
 
     /**
-     * Establish the new ControllerManager which will contain information about the specific
-     * controller we use throughout the app.
+     * Establish the connection between the Controller and all actions that can be done with it.
      */
-    private ControllerManager controllerManager;
-    /** Our controller */
-    private Controller controller;
+    private ControllerHandler controllerHandler;
 
     /**
      * The location of the user's last touch on the controller touchpad, from 0 to 1 in both
      * x and y directions. Valid region is a circle centered around [0.5, 0.5] with a radius
      * of 0.5.
      */
-    private PointF controllerTouch = new PointF(0.5f, 0.5f);
 
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 10.0f;
@@ -177,25 +173,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         modelTarget = new float[16];
         modelRoom = new float[16];
         headView = new float[16];
-        controllerManager = new ControllerManager(this, new ControllerManager.EventListener() {
-            @Override
-            public void onApiStatusChanged(int i) {
-                return;
-            }
-
-            @Override
-            public void onRecentered() {
-                return;
-            }
-        });
-        controller = controllerManager.getController();
-        controllerManager.start();
-        controller.setEventListener(new Controller.EventListener() {
-            @Override
-            public void onUpdate() {
-                onControllerUpdate();
-            }
-        });
+        controllerHandler = new ControllerHandler(this,this);
         rotationHandler = new Handler();
 
         // Define ceiling location
@@ -240,7 +218,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     @Override
     public void onPause() {
         gvrAudioEngine.pause();
-        controllerManager.stop();
+        controllerHandler.getControllerManager().stop();
         super.onPause();
     }
 
@@ -248,7 +226,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     public void onResume() {
         super.onResume();
         gvrAudioEngine.resume();
-        controllerManager.start();
+        controllerHandler.getControllerManager().start();
     }
 
     @Override
@@ -499,22 +477,14 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         return angle < angleLimit;
     }
 
-    //TODO move all controller things to a new static ControllerManager class
-    boolean controllerClickButtonClicked = false;
-    public void onControllerUpdate() {
-        controller.update();
-        if (controller.clickButtonState) {
-            if (!controllerClickButtonClicked) {
-                onControllerClickButton();
-                controllerClickButtonClicked = true;
-            }
-        } else {
-            controllerClickButtonClicked = false;
-        }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRotation();
+        controllerHandler.getControllerManager().stop();
     }
 
     public void onControllerClickButton() {
-        Log.i(TAG, "onControllerClickButton");
         if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
             successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
             gvrAudioEngine.playSound(successSourceId, false );
@@ -527,13 +497,6 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             Intent newIntent = new Intent(MainActivity.this, HomeActivity.class);
             MainActivity.this.startActivity(newIntent);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        stopRotation();
-        controllerManager.stop();
     }
 
     /** How much the object is rotated by about the vertical axis. */
