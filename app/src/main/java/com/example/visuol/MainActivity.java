@@ -502,7 +502,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
     /**
      * Run when a user swipe across the touchpad of the controller with a specific velocity
-     * @param velocity The velocity of the swipe, in (% diameter moved) / second
+     * @param velocity The velocity of the swipe, in (% diameter moved) / millisecond
      */
     public void onControllerSwipe(PointF velocity) {
         Log.i(TAG, "onControllerSwipe run");

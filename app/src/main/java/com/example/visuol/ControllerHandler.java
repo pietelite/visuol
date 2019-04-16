@@ -25,7 +25,7 @@ public class ControllerHandler {
     private PointF touchVector = new PointF(0.0f, 0.0f);
     private Handler updateTouchVectorHandler;
     /** The time between each swipe-speed update, in milliseconds. */
-    private int updateTouchVectorInterval = 50;
+    private int UPDATE_TOUCH_VECTOR_INTERVAL = 50;
     private boolean isRunningUpdateTouchvector = false;
 
     private Controller controller;
@@ -97,12 +97,12 @@ public class ControllerHandler {
         @Override
         public void run() {
             try {
-                //TODO update the velocity vector here
+                touchVector.x = (touchPos.x - touchPosPrevious.x) / UPDATE_TOUCH_VECTOR_INTERVAL;
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
                 updateTouchVectorHandler.postDelayed(
-                        updateTouchVector, updateTouchVectorInterval);
+                        updateTouchVector, UPDATE_TOUCH_VECTOR_INTERVAL);
             }
         }
     };
