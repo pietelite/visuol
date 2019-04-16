@@ -485,6 +485,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     }
 
     public void onControllerClickButton() {
+        Log.i(TAG, "onControllerClickButton run");
         if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
             successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
             gvrAudioEngine.playSound(successSourceId, false );
@@ -497,6 +498,14 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             Intent newIntent = new Intent(MainActivity.this, HomeActivity.class);
             MainActivity.this.startActivity(newIntent);
         }
+    }
+
+    /**
+     * Run when a user swipe across the touchpad of the controller with a specific velocity
+     * @param velocity The velocity of the swipe, in (% diameter moved) / second
+     */
+    public void onControllerSwipe(PointF velocity) {
+        Log.i(TAG, "onControllerSwipe run");
     }
 
     /** How much the object is rotated by about the vertical axis. */

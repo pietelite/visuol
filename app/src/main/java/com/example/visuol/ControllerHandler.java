@@ -26,6 +26,7 @@ public class ControllerHandler {
     private Handler updateTouchVectorHandler;
     /** The time between each swipe-speed update, in milliseconds. */
     private int updateTouchVectorInterval = 50;
+    private boolean isRunningUpdateTouchvector = false;
 
     private Controller controller;
     private ControllerManager controllerManager;
@@ -83,26 +84,37 @@ public class ControllerHandler {
         }
     }
 
-    Runnable runningUpdateTouchVector = new Runnable() {
+    public void setUpdatingTouchVector(boolean isTouching) {
+        if (isTouching && !isRunningUpdateTouchvector) {
+            startUpdatingTouchVector();
+        }
+        if (!isTouching && isRunningUpdateTouchvector) {
+            stopUpdatingTouchVector();
+        }
+    }
+
+    Runnable updateTouchVector = new Runnable() {
         @Override
         public void run() {
             try {
-
+                //TODO update the velocity vector here
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
                 updateTouchVectorHandler.postDelayed(
-                        runningUpdateTouchVector, updateTouchVectorInterval);
+                        updateTouchVector, updateTouchVectorInterval);
             }
         }
     };
 
-    void startRotation() {
-        runningUpdateTouchVector.run();
+    void startUpdatingTouchVector() {
+        updateTouchVector.run();
+        isRunningUpdateTouchvector = true;
     }
 
-    void stopRotation() {
-        updateTouchVectorHandler.removeCallbacks(runningUpdateTouchVector);
+    void stopUpdatingTouchVector() {
+        updateTouchVectorHandler.removeCallbacks(updateTouchVector);
+        isRunningUpdateTouchvector = false;
     }
 
 }

@@ -7,9 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="551c43ba-d297-4062-a4eb-7d003ec27853" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -111,7 +109,7 @@
           <entry key="colors" value="48" />
           <entry key="gitignore" value="27" />
           <entry key="gradle" value="54" />
-          <entry key="java" value="9161" />
+          <entry key="java" value="10104" />
           <entry key="properties" value="46" />
           <entry key="txt" value="181" />
           <entry key="xml" value="910" />
@@ -120,7 +118,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="54" />
-          <entry key="JAVA" value="9161" />
+          <entry key="JAVA" value="10104" />
           <entry key="PLAIN_TEXT" value="348" />
           <entry key="Properties" value="46" />
           <entry key="XML" value="958" />
@@ -141,23 +139,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="524" column="34" selection-start-line="524" selection-start-column="34" selection-end-line="524" selection-end-column="34" />
+            <state relative-caret-position="199">
+              <caret line="507" column="43" selection-start-line="507" selection-start-column="43" selection-end-line="507" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#20517#20518#0" expanded="true" />
+                <element signature="e#20567#20568#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="100" column="39" lean-forward="true" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+            <state relative-caret-position="298">
+              <caret line="99" column="54" selection-start-line="99" selection-start-column="54" selection-end-line="99" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1030#1031#0" expanded="true" />
@@ -170,12 +170,8 @@
                 <element signature="e#1627#1628#0" expanded="true" />
                 <element signature="e#1768#1921#0" expanded="true" />
                 <element signature="e#1920#1921#0" expanded="true" />
-                <element signature="e#2693#3040#0" expanded="true" />
-                <element signature="e#3039#3040#0" expanded="true" />
-                <element signature="e#3068#3069#0" expanded="true" />
-                <element signature="e#3111#3112#0" expanded="true" />
-                <element signature="e#3138#3139#0" expanded="true" />
-                <element signature="e#3208#3209#0" expanded="true" />
+                <element signature="e#2883#3278#0" expanded="true" />
+                <element signature="e#3277#3278#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -329,8 +325,8 @@
         <option value="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/example/visuol/BuildConfig.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -549,7 +545,7 @@
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.23347548" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.23347548" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
@@ -560,7 +556,7 @@
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" weight="0.329718" />
       <window_info anchor="bottom" id="Debug" order="4" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49253732" visible="true" weight="0.329718" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="5" sideWeight="0.49253732" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5074627" side_tool="true" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Build" order="8" sideWeight="0.4946695" weight="0.3286334" />
@@ -727,20 +723,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="524" column="34" selection-start-line="524" selection-start-column="34" selection-end-line="524" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/ControllerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="100" column="39" lean-forward="true" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+        <state relative-caret-position="298">
+          <caret line="99" column="54" selection-start-line="99" selection-start-column="54" selection-end-line="99" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1030#1031#0" expanded="true" />
@@ -753,12 +739,20 @@
             <element signature="e#1627#1628#0" expanded="true" />
             <element signature="e#1768#1921#0" expanded="true" />
             <element signature="e#1920#1921#0" expanded="true" />
-            <element signature="e#2693#3040#0" expanded="true" />
-            <element signature="e#3039#3040#0" expanded="true" />
-            <element signature="e#3068#3069#0" expanded="true" />
-            <element signature="e#3111#3112#0" expanded="true" />
-            <element signature="e#3138#3139#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
+            <element signature="e#2883#3278#0" expanded="true" />
+            <element signature="e#3277#3278#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/visuol/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="507" column="43" selection-start-line="507" selection-start-column="43" selection-end-line="507" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#20517#20518#0" expanded="true" />
+            <element signature="e#20567#20568#0" expanded="true" />
           </folding>
         </state>
       </provider>
