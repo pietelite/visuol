@@ -2,4 +2,4 @@
 VR Project for CS196
 
 <title>General Information</title>
-For now, the project will just be editing the sample VR software directly from Google. From here, after fulfilling the purpose which we set out to accomplish, we can start generating an entirely new Project.
+This version is the project we created by ourselves. In this application, we can see three dimensional graphics used in Calculus III and physics in google daydream.
