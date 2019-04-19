@@ -5,6 +5,7 @@
     <string name="title_activity_visuol_launch">VisuolLaunch</string>
     <string name="welcome">Welcome to the Visuol app!</string>
     <string name="startVr">Start VR</string>
+    <string name="startAr">Start AR</string>
     <string name="title_activity_app_information">AppInformation</string>
     <string name="information_header">Visuol App Information</string>
     <string name="create">Create New Object</string>

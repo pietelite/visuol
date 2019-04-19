@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.example.visuol"
         multiDexEnabled true
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -17,9 +17,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.8.0'
+    implementation 'com.google.ar.sceneform:core:1.8.0'
     implementation 'com.google.vr:sdk-base:1.190.0'
     implementation 'de.javagl:obj:0.2.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
