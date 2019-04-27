@@ -24,6 +24,7 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.visuol_launch);
         Button startVr = findViewById(R.id.startVr);
         Button toInformation = findViewById(R.id.toInformation);
+        Button startAr = findViewById(R.id.startAr);
 
         //Set the actions to occur when clicking the buttons
         startVr.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +32,14 @@ public class HomeActivity extends Activity {
             public void onClick(View view) {
                 //Start VR
                 Intent newIntent = new Intent(HomeActivity.this, MainActivity.class);
+                HomeActivity.this.startActivity(newIntent);
+            }
+        });
+        startAr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Start AR
+                Intent newIntent = new Intent(HomeActivity.this, SceneformActivity.class);
                 HomeActivity.this.startActivity(newIntent);
             }
         });
@@ -60,7 +69,7 @@ public class HomeActivity extends Activity {
             @Override
             public void onClick(View view) {
                 CreateObject a = new CreateObject();
-                a.writeObject();
+                //a.writeObject();
             }
         });
     }

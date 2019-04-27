@@ -1,7 +1,9 @@
 package com.example.visuol;
 
+/*
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+*/
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,6 +40,7 @@ public class CreateObject {
     private static boolean xTermPositive;
     private static boolean yTermPositive;
 
+    /*
     private double[] defaultNormal = {0.0,0.0,1.0};
     private String objectName;
     private static Vertex[][] vertexs;
@@ -49,6 +52,7 @@ public class CreateObject {
     public static List getFacess() {
         return facess;
     }
+
     private INDArray calXCor() {
         return Nd4j.linspace(xMin,xMax,resolution);
     }
@@ -217,4 +221,6 @@ public class CreateObject {
             ioe.printStackTrace();
         }
     }
+*/
 }
+
