@@ -264,24 +264,26 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         Matrix.translateM(modelRoom, 0, 0, FLOOR_HEIGHT, 0);
 
         // Avoid any delays during start-up due to decoding of sound files.
-        new Thread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
-                        // returned sourceId handle is stored and allows for repositioning the sound object
-                        // whenever the target position changes.
-                        gvrAudioEngine.preloadSoundFile(OBJECT_SOUND_FILE);
-                        sourceId = gvrAudioEngine.createSoundObject(OBJECT_SOUND_FILE);
-                        gvrAudioEngine.setSoundObjectPosition(
-                                sourceId, targetPosition[0], targetPosition[1], targetPosition[2]);
-                        gvrAudioEngine.playSound(sourceId, true /* looped playback */);
-                        // Preload an unspatialized sound to be played on a successful trigger on the
-                        // target.
-                        gvrAudioEngine.preloadSoundFile(SUCCESS_SOUND_FILE);
-                    }
-                })
-                .start();
+
+        // WE DON'T WANT ANY AUDIO RIGHT NOW
+//        new Thread(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
+//                        // returned sourceId handle is stored and allows for repositioning the sound object
+//                        // whenever the target position changes.
+//                        gvrAudioEngine.preloadSoundFile(OBJECT_SOUND_FILE);
+//                        sourceId = gvrAudioEngine.createSoundObject(OBJECT_SOUND_FILE);
+//                        gvrAudioEngine.setSoundObjectPosition(
+//                                sourceId, targetPosition[0], targetPosition[1], targetPosition[2]);
+//                        gvrAudioEngine.playSound(sourceId, true /* looped playback */);
+//                        // Preload an unspatialized sound to be played on a successful trigger on the
+//                        // target.
+//                        gvrAudioEngine.preloadSoundFile(SUCCESS_SOUND_FILE);
+//                    }
+//                })
+//                .start();
 
         updateTargetPosition();
 
@@ -491,6 +493,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             gvrAudioEngine.playSound(successSourceId, false );
             curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
             yawDegreeCount = 0;
+            targetPosition[1] = 0.0f;
         }
 
         if (isLookingAt(ceilingTarget, ANGLE_LIMIT_CEILING)) {
@@ -505,7 +508,10 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
      * @param velocity The velocity of the swipe, in (% diameter moved) / millisecond
      */
     public void onControllerSwipe(PointF velocity) {
-        Log.i(TAG, "onControllerSwipe run");
+        Log.i(TAG, "onControllerSwipe run: velocity vector = " +
+                velocity.x + ", " + velocity.y);
+        yawDegreeCount += velocity.x * 500;
+        targetPosition[1] -= velocity.y * 20;
     }
 
     /** How much the object is rotated by about the vertical axis. */
