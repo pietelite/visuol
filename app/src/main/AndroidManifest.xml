@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HelloSceneformActivity"
+            android:name=".SceneformActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:label="Hello Sceneform"

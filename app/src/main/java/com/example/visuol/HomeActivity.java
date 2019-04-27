@@ -39,7 +39,7 @@ public class HomeActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //Start AR
-                Intent newIntent = new Intent(HomeActivity.this, HelloSceneformActivity.class);
+                Intent newIntent = new Intent(HomeActivity.this, SceneformActivity.class);
                 HomeActivity.this.startActivity(newIntent);
             }
         });
