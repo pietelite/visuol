@@ -17,11 +17,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".SceneformActivity">
 
-  <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
+  <fragment
       android:id="@+id/ux_fragment"
+      android:name="com.google.ar.sceneform.ux.ArFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
+
+  <Button
+      android:id="@+id/button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="32dp"
+      android:layout_marginTop="32dp"
+      android:rotation="0"
+      android:text="Button" />
 
 </FrameLayout>
