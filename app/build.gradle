@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.ar.sceneform.plugin'
 
 android {
     compileSdkVersion 28
@@ -71,3 +72,9 @@ sceneform.asset('app/src/main/assets/andy.obj',
         'default',
         'app/src/main/assets/andy.sfa',
         'src/main/res/raw/andy')*/
+
+
+sceneform.asset('sampledata/hyperbolic_paraboloid.obj',
+        'default',
+        'sampledata/hyperbolic_paraboloid.sfa',
+        'src/main/res/raw/hyperbolic_paraboloid')

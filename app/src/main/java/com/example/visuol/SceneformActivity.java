@@ -20,6 +20,7 @@ package com.example.visuol;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
@@ -44,6 +47,7 @@ public class SceneformActivity extends AppCompatActivity {
     private static final double MIN_OPENGL_VERSION = 3.0;
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
+    private int rawFile;
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -56,13 +60,39 @@ public class SceneformActivity extends AppCompatActivity {
             return;
         }
 
+        rawFile = R.raw.andy;
         setContentView(R.layout.activity_ux);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+
+        Button toLaunch = findViewById(R.id.toLaunchFromAr);
+        toLaunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(SceneformActivity.this, HomeActivity.class);
+                SceneformActivity.this.startActivity(newIntent);
+            }
+        });
+
+        Button arButton1 = findViewById(R.id.arButton1);
+        arButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rawFile = R.raw.andy;
+            }
+        });
+
+        Button arButton2 = findViewById(R.id.arButton2);
+        arButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rawFile = R.raw.hyperbolic_paraboloid;
+            }
+        });
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
         // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
         ModelRenderable.builder()
-            .setSource(this, R.raw.andy)
+            .setSource(this, rawFile)
             .build()
             .thenAccept(renderable -> andyRenderable = renderable)
             .exceptionally(

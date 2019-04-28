@@ -21,6 +21,8 @@
         Developer: Pieter\n
         Developer: Jiaming\n
     </string>
+    <string name="ar_andy">Andy</string>
+    <string name="ar_hyperbolic_paraboloid">Hyperbolid Paraboloid</string>
     <string name="background_image_desc">A background image for the menus</string>
     <string name="color_gray">#596366</string>
     <string name="color_green">#2a8764</string>
