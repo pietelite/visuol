@@ -1,6 +1,7 @@
 package com.example.visuol;
 
 import android.content.Intent;
+import android.graphics.PointF;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -30,12 +31,22 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private static final String TAG = "HelloVrActivity";
 
     /** The total number of objects in the app. */
-    private static final int TARGET_MESH_COUNT = 3;
+    private static final int TARGET_MESH_COUNT = 6;
 
-    private int rotationInterval = 50; // 5 seconds by default, can be changed later
-    private Handler handler;
+    private int rotationInterval = 50;
+    private Handler rotationHandler;
     private boolean targetPositionUpdated = false;
-    //private final Controller controller = ControllerManager.getController();
+
+    /**
+     * Establish the connection between the Controller and all actions that can be done with it.
+     */
+    private ControllerHandler controllerHandler;
+
+    /**
+     * The location of the user's last touch on the controller touchpad, from 0 to 1 in both
+     * x and y directions. Valid region is a circle centered around [0.5, 0.5] with a radius
+     * of 0.5.
+     */
 
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 10.0f;
@@ -164,8 +175,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         modelTarget2 = new float[16];
         modelRoom = new float[16];
         headView = new float[16];
-        //controller = ControllerManager.getController();
-        handler = new Handler();
+        controllerHandler = new ControllerHandler(this,this);
+        rotationHandler = new Handler();
 
         // Define ceiling location
         ceilingTarget = new float[16];
@@ -192,7 +203,10 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         // Enable Cardboard-trigger feedback with Daydream headsets. This is a simple way of
         // supporting Daydream controller input for basic interactions using the existing Cardboard
         // trigger API. We want to fix this so we can use more Daydream Controller functionality.
+
+        /*
         gvrView.enableCardboardTriggerEmulation();
+        */
 
         if (gvrView.setAsyncReprojectionEnabled(true)) {
             // Async reprojection decouples the app framerate from the display framerate,
@@ -206,6 +220,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     @Override
     public void onPause() {
         gvrAudioEngine.pause();
+        controllerHandler.getControllerManager().stop();
         super.onPause();
     }
 
@@ -213,6 +228,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     public void onResume() {
         super.onResume();
         gvrAudioEngine.resume();
+        controllerHandler.getControllerManager().start();
     }
 
     @Override
@@ -418,16 +434,14 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         Util.checkGlError("drawRoom");
     }
 
-    /**
-     * Called when the Cardboard trigger is pulled.
-     */
+    /*
     @Override
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
         if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
             successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
-            gvrAudioEngine.playSound(successSourceId, false /* looping disabled */);
+            gvrAudioEngine.playSound(successSourceId, false );
             curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
             yawDegreeCount = 0;
         }
@@ -438,6 +452,8 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             MainActivity.this.startActivity(newIntent);
         }
     }
+    */
+
     // COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT. This put the object in a new location.
     // We could try to use this to make the rotation.
     private void hideTarget(float yaw, float[] modelTarget) {
@@ -484,7 +500,34 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     public void onDestroy() {
         super.onDestroy();
         stopRotation();
+        controllerHandler.getControllerManager().stop();
     }
+
+    public void onControllerClickButton() {
+        Log.i(TAG, "onControllerClickButton run");
+        if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
+            successSourceId = gvrAudioEngine.createStereoSound(SUCCESS_SOUND_FILE);
+            gvrAudioEngine.playSound(successSourceId, false );
+            curTargetObject = (curTargetObject + 1) % TARGET_MESH_COUNT;
+            yawDegreeCount = 0;
+        }
+
+        if (isLookingAt(ceilingTarget, ANGLE_LIMIT_CEILING)) {
+            //For now just do the same thing as if you were looking at the object
+            Intent newIntent = new Intent(MainActivity.this, HomeActivity.class);
+            MainActivity.this.startActivity(newIntent);
+        }
+    }
+
+    /**
+     * Run when a user swipe across the touchpad of the controller with a specific velocity
+     * @param velocity The velocity of the swipe, in (% diameter moved) / millisecond
+     */
+    public void onControllerSwipe(PointF velocity) {
+        Log.i(TAG, "onControllerSwipe run");
+    }
+
+    /** How much the object is rotated by about the vertical axis. */
     private float yawDegreeCount = 0;
     Runnable rotationStatusChecker = new Runnable() {
         @Override
@@ -497,7 +540,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
-                handler.postDelayed(rotationStatusChecker, rotationInterval);
+                rotationHandler.postDelayed(rotationStatusChecker, rotationInterval);
             }
         }
     };
@@ -507,6 +550,6 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     }
 
     void stopRotation() {
-        handler.removeCallbacks(rotationStatusChecker);
+        rotationHandler.removeCallbacks(rotationStatusChecker);
     }
 }
