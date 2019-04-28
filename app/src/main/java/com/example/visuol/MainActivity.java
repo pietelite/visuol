@@ -130,6 +130,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     private float[] modelView;
 
     private float[] modelTarget;
+    private float[] modelTarget2;
     private float[] modelRoom;
 
     private float[] ceilingTarget;
@@ -160,6 +161,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         tempPosition = new float[4];
         headRotation = new float[4];
         modelTarget = new float[16];
+        modelTarget2 = new float[16];
         modelRoom = new float[16];
         headView = new float[16];
         //controller = ControllerManager.getController();
@@ -267,7 +269,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
                 })
                 .start();
 
-        updateTargetPosition();
+        updateTargetPosition(modelTarget);
 
         Util.checkGlError("onSurfaceCreated");
 
@@ -309,7 +311,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     }
 
     /** Updates the target object position. */
-    private void updateTargetPosition() {
+    private void updateTargetPosition(float[] modelTarget) {
         Matrix.setIdentityM(modelTarget, 0);
         Matrix.translateM(modelTarget, 0, targetPosition[0], targetPosition[1], targetPosition[2]);
         Matrix.rotateM(modelTarget, 0, yawDegreeCount, 0, 1, 0);
@@ -366,7 +368,12 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
 
         Matrix.multiplyMM(modelView, 0, view, 0, modelTarget, 0);
         Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
+        Matrix.multiplyMM(modelView, 0, view, 0, modelTarget2, 0);
+        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
         drawTarget();
+        hideTarget(20.0f, modelTarget);
+        drawTarget2();
+        hideTarget(40.0f, modelTarget2);
 
         // Set modelView for the room, so it's drawn in the correct location
         Matrix.multiplyMM(modelView, 0, view, 0, modelRoom, 0);
@@ -382,14 +389,26 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
         GLES20.glUseProgram(objectProgram);
         GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
         if (isLookingAt(modelTarget, ANGLE_LIMIT_OBJECT)) {
-            targetObjectSelectedTextures.get(curTargetObject).bind();
+            targetObjectSelectedTextures.get(0).bind();
         } else {
-            targetObjectNotSelectedTextures.get(curTargetObject).bind();
+            targetObjectNotSelectedTextures.get(0).bind();
         }
-        targetObjectMeshes.get(curTargetObject).draw();
+        targetObjectMeshes.get(0).draw();
+        targetPosition = new float[] {0.0f, 0.0f, -targetDistance};
         Util.checkGlError("drawTarget");
     }
 
+    public void drawTarget2() {
+        GLES20.glUseProgram(objectProgram);
+        GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
+        if (isLookingAt(modelTarget2, ANGLE_LIMIT_OBJECT)) {
+            targetObjectSelectedTextures.get(1).bind();
+        } else {
+            targetObjectNotSelectedTextures.get(1).bind();
+        }
+        targetObjectMeshes.get(1).draw();
+        Util.checkGlError("drawTarget");
+    }
     /** Draw the room. */
     public void drawRoom() {
         GLES20.glUseProgram(objectProgram);
@@ -421,32 +440,32 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
     }
     // COMMENTED BECAUSE WE DON'T WANT TO MOVE OBJECT. This put the object in a new location.
     // We could try to use this to make the rotation.
-  /*
-  private void hideTarget() {
-    float[] rotationMatrix = new float[16];
-    float[] posVec = new float[4];
+    private void hideTarget(float yaw, float[] modelTarget) {
+        float[] rotationMatrix = new float[16];
+        float[] posVec = new float[4];
 
     // Matrix.setRotateM takes the angle in degrees, but Math.tan takes the angle in radians, so
     // yaw is in degrees and pitch is in radians.
-    float yawDegrees = (random.nextFloat() - 0.5f) * 2.0f * MAX_YAW;
-    float pitchRadians = (float) Math.toRadians((random.nextFloat() - 0.5f) * 2.0f * MAX_PITCH);
+        float yawDegrees = (random.nextFloat() - 0.5f) * 2.0f * MAX_YAW;
+        yawDegrees = yaw;
+        float pitchRadians = (float) Math.toRadians((random.nextFloat() - 0.5f) * 2.0f * MAX_PITCH);
 
-    Matrix.setRotateM(rotationMatrix, 0, yawDegrees, 0.0f, 1.0f, 0.0f);
-    targetDistance =
-        random.nextFloat() * (MAX_TARGET_DISTANCE - MIN_TARGET_DISTANCE) + MIN_TARGET_DISTANCE;
-    targetPosition = new float[] {0.0f, 0.0f, -targetDistance};
-    Matrix.setIdentityM(modelTarget, 0);
-    Matrix.translateM(modelTarget, 0, targetPosition[0], targetPosition[1], targetPosition[2]);
-    Matrix.multiplyMV(posVec, 0, rotationMatrix, 0, modelTarget, 12);
+        Matrix.setRotateM(rotationMatrix, 0, yawDegrees, 0.0f, 1.0f, 0.0f);
+        targetDistance =
+            random.nextFloat() * (MAX_TARGET_DISTANCE - MIN_TARGET_DISTANCE) + MIN_TARGET_DISTANCE;
+        targetPosition = new float[] {0.0f, 0.0f, -targetDistance};
+        Matrix.setIdentityM(modelTarget, 0);
+        Matrix.translateM(modelTarget, 0, targetPosition[0], targetPosition[1], targetPosition[2]);
+        Matrix.multiplyMV(posVec, 0, rotationMatrix, 0, modelTarget, 12);
 
-    targetPosition[0] = posVec[0];
-    targetPosition[1] = (float) Math.tan(pitchRadians) * targetDistance;
-    targetPosition[2] = posVec[2];
+        targetPosition[0] = posVec[0];
+        targetPosition[1] = posVec[1];
+        targetPosition[2] = posVec[2];
 
-    updateTargetPosition();
-    curTargetObject = random.nextInt(TARGET_MESH_COUNT);
+        updateTargetPosition(modelTarget);
+        curTargetObject = random.nextInt(TARGET_MESH_COUNT);
   }
-  */
+
 
     /**
      * Check if user is looking at the target by comparing and multiplying vectors
@@ -473,7 +492,7 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
             try {
                 if (targetPositionUpdated) {
                     yawDegreeCount += 0.4;
-                    updateTargetPosition();
+                    updateTargetPosition(modelTarget);
                 }
             } finally {
                 // 100% guarantee that this always happens, even if

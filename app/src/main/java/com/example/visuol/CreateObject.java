@@ -1,13 +1,16 @@
 package com.example.visuol;
 
+import android.util.Log;
+
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
-
+import android.os.Environment;
+import android.content.Context;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -27,7 +30,7 @@ public class CreateObject {
     /** Equation: a*(x-xo)**xP + b*(y-yo)**yP + c*(z-zo)^zP = d */
     private static int a = 2;
     private static int x0 = 1;
-    private static int xp = 2;
+                                                                                                                                                                                                                                                                                                                                                                                    private static int xp = 2;
     private static int b = 1;
     private static int y0 = 1;
     private static int yp = 2;
@@ -42,6 +45,9 @@ public class CreateObject {
     private String objectName;
     private static Vertex[][] vertexs;
     private static List<Face> facess;
+
+    public CreateObject() throws FileNotFoundException {
+    }
 
     public static Vertex[][] getVertexs() {
         return vertexs;
@@ -149,19 +155,22 @@ public class CreateObject {
     private int countPos = 0;
     private int countTexture = 0;
     private int countNormal = 0;
-    private static final String filename = "/Users/jiamingzeng/Desktop/newObject.txt";
+    File extDir = Environment.getExternalStorageDirectory();
+
+    //File file = new File(filePath);
+    private static final String file = "newObject.txt";
+    File filename = new File(extDir, file);
+    /** ../../../../assets */
     public URL getPackageLocation() {
         return getClass().getResource(".");
     }
+    private String TAG = " write Object";
     public void writeObject() {
         try {
             generateVectors();
             DecimalFormat df = new DecimalFormat("%.8f");
-            File file = new File(filename);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            FileWriter wri = new FileWriter(filename);
+            BufferedWriter writer = new BufferedWriter(wri);
             writer.write("g defalut\n");
             writer.write("#Vertices:\n");
             int posLineCount = 0;
@@ -213,6 +222,7 @@ public class CreateObject {
                     writer.write(v.posLineNumber + "/" + v.texLineNumber + "/" + v.norLineNumber);
                 }
             }
+            Log.i(TAG, "Object created");
         } catch(IOException ioe) {
             ioe.printStackTrace();
         }

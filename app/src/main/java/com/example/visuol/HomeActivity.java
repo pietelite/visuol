@@ -3,8 +3,11 @@ package com.example.visuol;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.IOException;
 
 /**
  * The main activity to launch upon starting the app. The purpose of it is to allow the user
@@ -24,6 +27,12 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.visuol_launch);
         Button startVr = findViewById(R.id.startVr);
         Button toInformation = findViewById(R.id.toInformation);
+        Button createOb = findViewById(R.id.createObj);
+        createOb.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                create();
+            }
+        });
 
         //Set the actions to occur when clicking the buttons
         startVr.setOnClickListener(new View.OnClickListener() {
@@ -55,13 +64,18 @@ public class HomeActivity extends Activity {
     }
 
     void create() {
+        setContentView(R.layout.visuol_launch);
         Button createOb = findViewById(R.id.createObj);
         createOb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreateObject a = new CreateObject();
-                a.writeObject();
-                System.out.println("success");
+                try {
+                    CreateObject a = new CreateObject();
+                    a.writeObject();
+                    Log.i("createObject", "Successful");
+                } catch(IOException ioe) {
+                    ioe.printStackTrace();
+                }
             }
         });
     }
