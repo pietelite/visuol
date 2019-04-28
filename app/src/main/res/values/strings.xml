@@ -7,6 +7,10 @@
     <string name="startVr">Start VR</string>
     <string name="startAr">Start AR</string>
     <string name="title_activity_app_information">AppInformation</string>
+    <string name="learn_more">Learn More</string>
+    <string name="title_learn_more">Learn More</string>
+    <string name="quadric_surfaces">Quadric Surfaces</string>
+    <string name="google_vr">Google VR</string>
     <string name="information_header">Visuol App Information</string>
     <string name="create">Create New Object</string>
     <string name="return_to_home">Back</string>

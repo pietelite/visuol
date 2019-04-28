@@ -19,10 +19,10 @@ import java.util.List;
 public class ControllerHandler {
     private static final String TAG = "ControllerHandler";
 
-    private static final float MINIMUM_SWIPE_SPEED = 0.0001f;
-    private PointF touchPosPrevious = new PointF(0.5f, 0.5f);
-    private PointF touchPos = new PointF(0.5f, 0.5f);
-    private PointF touchVector = new PointF(0.0f, 0.0f);
+    private static final float MINIMUM_SWIPE_SPEED = 0.0005f;
+    private PointF touchPosPrevious = new PointF(0.5000f, 0.5000f);
+    private PointF touchPos = new PointF(0.5000f, 0.5000f);
+    private PointF touchVector = new PointF(0.0000f, 0.0000f);
     private Handler updateTouchVectorHandler;
     /** The time between each swipe-speed update, in milliseconds. */
     private int UPDATE_TOUCH_VECTOR_INTERVAL = 50;
@@ -76,20 +76,24 @@ public class ControllerHandler {
         } else {
             controllerClickButtonClicked = false;
         }
-        setUpdatingTouchVector(controller.isTouching);
 
+        setUpdatingTouchVector(controller.isTouching);
         if (touchVector.length() > MINIMUM_SWIPE_SPEED) {
-            Log.i(TAG, "onControllerSwipeX");
             mainActivity.onControllerSwipe(touchVector);
         }
     }
 
     public void setUpdatingTouchVector(boolean isTouching) {
         if (isTouching && !isRunningUpdateTouchvector) {
+            touchPosPrevious.x = touchPos.x;
+            touchPosPrevious.y = touchPos.y;
             startUpdatingTouchVector();
         }
         if (!isTouching && isRunningUpdateTouchvector) {
             stopUpdatingTouchVector();
+        }
+        if (!isTouching) {
+            touchVector.set(0.0f, 0.0f);
         }
     }
 
@@ -99,12 +103,14 @@ public class ControllerHandler {
             try {
                 touchPos = controller.touch;
                 touchVector.x = (touchPos.x - touchPosPrevious.x) / UPDATE_TOUCH_VECTOR_INTERVAL;
+                touchVector.y = (touchPos.y - touchPosPrevious.y) / UPDATE_TOUCH_VECTOR_INTERVAL;
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
                 updateTouchVectorHandler.postDelayed(
                         updateTouchVector, UPDATE_TOUCH_VECTOR_INTERVAL);
-                touchPosPrevious = touchPos;
+                touchPosPrevious.x = touchPos.x;
+                touchPosPrevious.y = touchPos.y;
             }
         }
     };

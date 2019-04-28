@@ -2,8 +2,10 @@ package com.example.visuol;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 
 /**
@@ -25,6 +27,7 @@ public class HomeActivity extends Activity {
         Button startVr = findViewById(R.id.startVr);
         Button toInformation = findViewById(R.id.toInformation);
         Button startAr = findViewById(R.id.startAr);
+        Button toLearnMore = findViewById(R.id.toLearnMore);
 
         //Set the actions to occur when clicking the buttons
         startVr.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +52,12 @@ public class HomeActivity extends Activity {
                 toInformation();
             }
         });
+        toLearnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toLearnMore();
+            }
+        });
     }
 
     /** Opens the app information layout */
@@ -63,6 +72,31 @@ public class HomeActivity extends Activity {
         });
     }
 
+    void toLearnMore() {
+        setContentView(R.layout.learn_more);
+        Button toLaunch = findViewById(R.id.toLaunch2);
+        Button toQuadricSurfaces = findViewById(R.id.toQuadricSurfaces);
+        Button toGoogleVr = findViewById(R.id.toGoogleVr);
+        toLaunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toLaunch();
+            }
+        });
+        toQuadricSurfaces.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open("http://en.wikipedia.org/wiki/Quadric");
+            }
+        });
+        toGoogleVr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open("http://vr.google.com/daydream/");
+            }
+        });
+    }
+
     void create() {
         Button createOb = findViewById(R.id.createObject);
         createOb.setOnClickListener(new View.OnClickListener() {
@@ -72,5 +106,14 @@ public class HomeActivity extends Activity {
                 //a.writeObject();
             }
         });
+    }
+
+    void open(String url) {
+        Uri uri = Uri.parse("googlechrome://navigate?url=" + url);
+        Intent i = new Intent(Intent.ACTION_VIEW, uri);
+        if (i.resolveActivity(this.getPackageManager()) == null) {
+            i.setData(Uri.parse(url));
+        }
+        this.startActivity(i);
     }
 }
