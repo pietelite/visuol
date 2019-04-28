@@ -512,6 +512,12 @@ public class MainActivity extends GvrActivity implements GvrView.StereoRenderer 
                 velocity.x + ", " + velocity.y);
         yawDegreeCount += velocity.x * 500;
         targetPosition[1] -= velocity.y * 20;
+        if (targetPosition[1] > 2) {
+            targetPosition[1] = 2;
+        }
+        if (targetPosition[1] < -1) {
+            targetPosition[1] = -1;
+        }
     }
 
     /** How much the object is rotated by about the vertical axis. */
