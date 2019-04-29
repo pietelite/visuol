@@ -36,6 +36,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // REMOVED BECAUSE THERE WERE CONFLICTING DEPENDENCIES
 //    implementation (group: 'org.deeplearning4j', name: 'deeplearning4j-core', version: '1.0.0-beta3') {
 //        exclude group: 'org.bytedeco.javacpp-presets', module: 'opencv-platform'
 //        exclude group: 'org.bytedeco.javacpp-presets', module: 'leptonica-platform'
