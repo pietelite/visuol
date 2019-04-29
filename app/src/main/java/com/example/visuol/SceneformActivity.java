@@ -46,8 +46,11 @@ public class SceneformActivity extends AppCompatActivity {
     private static final String TAG = SceneformActivity.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
     private ArFragment arFragment;
-    private ModelRenderable andyRenderable;
+    private ModelRenderable newRenderable;
     private int rawFile;
+    private static int defaultRawFile = R.raw.andy;
+    private boolean modelGenerated = false;
+    private TransformableNode model;
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -60,7 +63,7 @@ public class SceneformActivity extends AppCompatActivity {
             return;
         }
 
-        rawFile = R.raw.andy;
+        rawFile = defaultRawFile;
         setContentView(R.layout.activity_ux);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
@@ -78,6 +81,7 @@ public class SceneformActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 rawFile = R.raw.andy;
+                reModel();
             }
         });
 
@@ -85,41 +89,69 @@ public class SceneformActivity extends AppCompatActivity {
         arButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rawFile = R.raw.hyperbolic_paraboloid;
+                rawFile = R.raw.ar_hyperbolic_paraboloid;
+                reModel();
             }
         });
 
+        initializeModel();
+    }
+
+    private void reModel() {
         // When you build a Renderable, Sceneform loads its resources in the background while returning
         // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
         ModelRenderable.builder()
-            .setSource(this, rawFile)
-            .build()
-            .thenAccept(renderable -> andyRenderable = renderable)
-            .exceptionally(
-                throwable -> {
-                    Toast toast =
-                        Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                    return null;
-                });
+                .setSource(this, rawFile)
+                .build()
+                .thenAccept(renderable -> newRenderable = renderable)
+                .exceptionally(
+                        throwable -> {
+                            Toast toast =
+                                    Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            return null;
+                        });
+        if (model != null) {
+            model.setRenderable(newRenderable);
+        }
+    }
+
+    private void initializeModel() {
+        // When you build a Renderable, Sceneform loads its resources in the background while returning
+        // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
+        ModelRenderable.builder()
+                .setSource(this, rawFile)
+                .build()
+                .thenAccept(renderable -> newRenderable = renderable)
+                .exceptionally(
+                        throwable -> {
+                            Toast toast =
+                                    Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            return null;
+                        });
         arFragment.setOnTapArPlaneListener(
-            (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-                if (andyRenderable == null) {
-                    return;
-                }
+                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                    if (newRenderable == null) {
+                        return;
+                    }
+                    if (!modelGenerated) {
+                        // Create the Anchor.
+                        Anchor anchor = hitResult.createAnchor();
+                        AnchorNode anchorNode = new AnchorNode(anchor);
+                        anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-            // Create the Anchor.
-            Anchor anchor = hitResult.createAnchor();
-            AnchorNode anchorNode = new AnchorNode(anchor);
-            anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-            // Create the transformable andy and add it to the anchor.
-            TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
-            andy.setParent(anchorNode);
-            andy.setRenderable(andyRenderable);
-            andy.select();
-            });
+                        // Create the transformable andy and add it to the anchor.
+                        TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
+                        andy.setParent(anchorNode);
+                        andy.setRenderable(newRenderable);
+                        andy.select();
+                        model = andy;
+                        modelGenerated = true;
+                    }
+                });
     }
 
     /**

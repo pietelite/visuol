@@ -79,3 +79,9 @@ sceneform.asset('sampledata/hyperbolic_paraboloid.obj',
         'default',
         'sampledata/hyperbolic_paraboloid.sfa',
         'src/main/res/raw/hyperbolic_paraboloid')
+
+
+sceneform.asset('src/main/assets/ar_hyperbolic_paraboloid.obj',
+        'default',
+        'src/main/assets/ar_hyperbolic_paraboloid.sfa',
+        'src/main/assets/ar_hyperbolic_paraboloid')
