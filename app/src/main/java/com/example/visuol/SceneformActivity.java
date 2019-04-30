@@ -94,6 +94,15 @@ public class SceneformActivity extends AppCompatActivity {
             }
         });
 
+        Button arButton3 = findViewById(R.id.arButton3);
+        arButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rawFile = R.raw.ar_elliptic_paraboloid;
+                reModel();
+            }
+        });
+
         initializeModel();
     }
 

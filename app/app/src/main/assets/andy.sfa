@@ -1,21 +1,21 @@
 {
   materials: [
     {
-      name: 'DefaultMaterial',
+      name: 'unlit_material',
       parameters: [
         {
-          baseColor: null,
+          baseColor: 'andy',
         },
         {
           baseColorTint: [
-            0.59999999999999998,
-            0.59999999999999998,
-            0.59999999999999998,
+            1,
+            1,
+            1,
             1,
           ],
         },
         {
-          metallic: 0,
+          metallic: 1,
         },
         {
           roughness: 1,
@@ -34,10 +34,16 @@
       'Orientation',
     ],
     collision: {},
-    file: 'src/main/assets/ar_hyperbolic_paraboloid.obj',
-    name: 'ar_hyperbolic_paraboloid',
+    file: 'src/main/assets/andy.obj',
+    name: 'andy',
     recenter: 'root',
-    scale: 0.1,
   },
+  samplers: [
+    {
+      file: 'src/main/assets\\andy.png',
+      name: 'andy',
+      pipeline_name: 'andy.png',
+    },
+  ],
   version: '0.54:2',
 }

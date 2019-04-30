@@ -66,22 +66,20 @@ dependencies {
 
 }
 
-/*
+
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-sceneform.asset('app/src/main/assets/andy.obj',
+sceneform.asset('src/main/assets/andy.obj',
         'default',
         'app/src/main/assets/andy.sfa',
-        'src/main/res/raw/andy')*/
-
-
-sceneform.asset('sampledata/hyperbolic_paraboloid.obj',
-        'default',
-        'sampledata/hyperbolic_paraboloid.sfa',
-        'src/main/res/raw/hyperbolic_paraboloid')
-
+        'src/main/res/raw/andy')
 
 sceneform.asset('src/main/assets/ar_hyperbolic_paraboloid.obj',
         'default',
         'src/main/assets/ar_hyperbolic_paraboloid.sfa',
         'src/main/assets/ar_hyperbolic_paraboloid')
+
+sceneform.asset('src/main/assets/ar_elliptic_paraboloid.obj',
+        'default',
+        'src/main/assets/ar_elliptic_paraboloid.sfa',
+        'src/main/assets/ar_elliptic_paraboloid')
